@@ -2,6 +2,9 @@ package lauraewilson.com.github.littlepotatobot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
@@ -21,7 +24,24 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		String token = "MTAzMTAwNDM2NTQzNzI5MjU1NA.GU9qw1.Poa1t_P8NBn58CM4CrLlvbTJwr2evAxu1XXPxE";
+		Scanner fileInput;
+		
+		try {
+			fileInput = new Scanner(new File("config.txt"));
+		} catch (FileNotFoundException ex) {
+			System.out.println("File not found. Error: " + ex.getMessage());
+			return;
+		}
+		
+		String token;
+		
+		if (fileInput.hasNext()) {
+			token = fileInput.next();
+		}
+		else {
+			System.out.println("File appears to be empty. Please add the token for your bot.");
+			return;
+		}
 		
 		DiscordApi api = new DiscordApiBuilder()
 				.setToken(token)
